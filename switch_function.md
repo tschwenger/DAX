@@ -14,7 +14,7 @@ painful to update, change or reproduce (especially if it's someone elses code). 
 
 ## Sytax
 
-SWITCH( expression , value , result [, value, <result>] … [, <lse] ) 
+SWITCH( expression , value , result [, value, result] … [, else] ) 
 
 Example
 
