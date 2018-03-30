@@ -131,3 +131,17 @@ FILTER(SUMMARIZE('Date', 'Date'[Fiscal Year], 'Date'[Fiscal Quarter Of Year], 'D
 
 "column name",CALCULATE([measure],'Type'[Key]=1,'Scenario'[ScenarioKey]=1))
 
+
+//equivalent to the above
+
+EVALUATE
+filter(	
+SUMMARIZECOLUMNS(	
+	'Organization'[District Name]
+	,'Date'[Fiscal Year]
+	, 'Date'[Fiscal Quarter Of Year]
+	, 'Date'[Fiscal Period]
+	,"GL Selection v LY Pct"
+	,CALCULATE([GL Balance Selection v LY Pct])
+),'Organization'[District Name]="R2 D2"&& 'Date'[Fiscal Year] = "FY2017" && 'Date'[Fiscal Quarter Of Year] = "Q1" && 'Date'[Fiscal Period] = "FY2017 P01"
+)
