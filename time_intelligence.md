@@ -17,6 +17,15 @@ Last Year YTD Profit = TOTALYTD('Internet Sales'[Profit],DATEADD('Date'[Date],-1
 * use the dateadd function to link to the date table
 * subtract off the 11 periods and set to month
 
+or 
+test = TOTALYTD([lead count],DATEADD('date'[Date],-12,month))
+
+test 2 = CALCULATE([lead count ly],DATESYTD('date'[Date]))
+
+test 3 = CALCULATE([lead count],DATEADD(DATESYTD('date'[Date]),-1,year))
+
+test 4 = CALCULATE([lead count],SAMEPERIODLASTYEAR(DATESYTD('date'[Date])))
+
 ## Prior Year Amount
 
 
