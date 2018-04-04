@@ -26,6 +26,10 @@ test 3 = CALCULATE([lead count],DATEADD(DATESYTD('date'[Date]),-1,year))
 
 test 4 = CALCULATE([lead count],SAMEPERIODLASTYEAR(DATESYTD('date'[Date])))
 
+test 9:=CALCULATE([lead count ly ytd],DATESYTD('date'[Date]))
+
+
+
 ## Prior Year Amount
 
 
