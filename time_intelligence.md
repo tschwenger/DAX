@@ -6,6 +6,8 @@
 
 YTD PROFITS = TOTALYTD([Profit],'Date'[Date])
 
+ytd measure:=CALCULATE([sum or count],FILTER(ALL('date'),'date'[Year]=MAX('date'[Year])&&'date'[Date]<=MAX('date'[Date])))
+
 * use the measure you want to and add the date table
 * pretty straight forward calculation
 
