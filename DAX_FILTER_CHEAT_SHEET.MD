@@ -2,12 +2,12 @@
 
 ## FILTER() AND ALL() EXAMPLE: CALCULATE THE TOTAL HOMES ON THE MARKET
 
-Total Homes on Market (calculate) = 
-CALCULATE(
-	[Quantity Sold],
-	FILTER(ALL('MLS'),
-		'MLS'[Sold Date]>=MIN('Date'[Date]) &&
-		'MLS'[Listing Date]<=MAX('Date'[Date])))
+	Total Homes on Market (calculate) = 
+	CALCULATE(
+		[Quantity Sold],
+		FILTER(ALL('MLS'),
+			'MLS'[Sold Date]>=MIN('Date'[Date]) &&
+			'MLS'[Listing Date]<=MAX('Date'[Date])))
 
 * CALCULATE FUNCTION IS USED TO OVERIDE FILTER CONTEXT
 
@@ -21,34 +21,34 @@ CALCULATE(
 
 EQUIVALENT FUNCTION
 
-Total Homes on Market = 
-COUNTROWS(
-FILTER(ALL('MLS'),
-	'MLS'[Sold Date]>=MIN('Date'[Date]) &&
-	'MLS'[Listing Date]<=MAX('Date'[Date])))
+	Total Homes on Market = 
+	COUNTROWS(
+	FILTER(ALL('MLS'),
+		'MLS'[Sold Date]>=MIN('Date'[Date]) &&
+		'MLS'[Listing Date]<=MAX('Date'[Date])))
 
 * PRETTY MUCH THE SAME DEAL AS ABOVE, HOWEVER, NO CALCULATE FUNCTION IS USED. IT WORKS, BUT RECOMMENDATION
 WOULD BE TO CREATE THE COUNTROWS SEPARATELY AND APPLY CALCULATE, AS ABOVE, WITH THE SAME FILTER CONTEXT 
 
 ## FILTER() AND ALL() FUNCTION EXAMPLE 2: NEW LISTINGS ON THE MARKET
 
-New Listings on Market (calculate) = 
-CALCULATE(
-	[Quantity Sold],
-	FILTER(ALL('MLS'),
-		'MLS'[Listing Date]>=MIN('Date'[Date]) &&
-		'MLS'[Listing Date]<=MAX('Date'[Date]))) 
+	New Listings on Market (calculate) = 
+	CALCULATE(
+		[Quantity Sold],
+		FILTER(ALL('MLS'),
+			'MLS'[Listing Date]>=MIN('Date'[Date]) &&
+			'MLS'[Listing Date]<=MAX('Date'[Date]))) 
 
 * REPEATED EXAMPLE FROM ABOVE
 * KEY POINT, USING CALCULATE WITH FILTER AND ALL TO OVERIDE THE FILTER CONTEXT OF THE DATE DIMENSION IN THE REPORT LAYER
 * ALL() FUNCTION IGNORES THE FILTER CONTEXT ON THE DATE DIMENSION
 
-New Listings On Market = 
+	New Listings On Market = 
 
-COUNTROWS(
-	FILTER(ALL('MLS'),
-		'MLS'[Listing Date]>=MIN('Date'[Date]) &&
-		'MLS'[Listing Date]<=MAX('Date'[Date]))) 
+	COUNTROWS(
+		FILTER(ALL('MLS'),
+			'MLS'[Listing Date]>=MIN('Date'[Date]) &&
+			'MLS'[Listing Date]<=MAX('Date'[Date]))) 
 
 
 ## FILTER AND THE ALLEXCEPT FUNCTION
@@ -68,13 +68,13 @@ NOTES:
 EXAMPLE: IN THIS USE CASE 'MLS'[NEW CONSTRUCTION] IS A FILTER IN THE REPORT
 
 
-New Listings (AllExcept) = 
+	New Listings (AllExcept) = 
 
-CALCULATE(
+	CALCULATE(
 	[Quantity Sold],
-	FILTER(ALLEXCEPT('MLS','MLS'[New Construction Y/N]),
-		'MLS'[Listing Date]>=MIN('Date'[Date]) &&
-		'MLS'[Listing Date]<=MAX('Date'[Date])))
+		FILTER(ALLEXCEPT('MLS','MLS'[New Construction Y/N]),
+			'MLS'[Listing Date]>=MIN('Date'[Date]) &&
+			'MLS'[Listing Date]<=MAX('Date'[Date])))
 
 * IN THIS CASE WE ARE IGNORING ALL FILTERS ON THE 'MLS' TABLE EXCEPT THE 'MLS'[NEW CONSTRUCTION Y/N] COLUMN IN THE TABLE
 
@@ -90,15 +90,15 @@ CALCULATE(
 
 Example:
 
-Total Homes on Market (calculate) hasonevalue = 
-IF(
-	HASONEVALUE('Date'[Year]),
-		CALCULATE(
-	[Quantity Sold],
-	FILTER(ALL('MLS'),
-		'MLS'[Sold Date] >= MIN('Date'[Date]) &&
-		'MLS'[Listing Date] <= MAX('Date'[Date]))),
-		BLANK())
+	Total Homes on Market (calculate) hasonevalue = 
+	IF(
+		HASONEVALUE('Date'[Year]),
+			CALCULATE(
+		[Quantity Sold],
+		FILTER(ALL('MLS'),
+			'MLS'[Sold Date] >= MIN('Date'[Date]) &&
+			'MLS'[Listing Date] <= MAX('Date'[Date]))),
+			BLANK())
 
 * HASONEVALUE IS USED TO CHECK WHETHER THERE IS ONLY ONE VALUE ON THE YEAR AND DATE LEVEL
 
