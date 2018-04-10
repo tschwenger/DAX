@@ -154,3 +154,100 @@ AVERAGEX(
 first purchase date
 
 First Purchase date = MINX(RELATEDTABLE(Sale),'Sale'[Invoice Date Key])
+
+## Hack Prior Calculation when using non contiguous date table
+
+Note: absolutely not recommended. Only if you walk onto a shitstorm of a job and they fucked up the architecture of their data model
+
+DEFINE 
+MEASURE 'Fact Table'[Lead Event LY] = VAR CurrFY =
+    IF (
+        HASONEVALUE ( 'Date'[ Year Number] ),
+        FIRSTNONBLANK ( 'Date'[ Year Number], TRUE () )
+    )
+VAR CurrDayNum =
+    IF (
+        HASONEVALUE ( 'Date'[ Day Of Year Number] ),
+        FIRSTNONBLANK ( 'Date'[ Day Of Year Number], TRUE () )
+    )
+VAR CurrWeekNum =
+    IF (
+        HASONEVALUE ( 'Date'[ Week Of Year Number] ),
+        FIRSTNONBLANK ( 'Date'[ Week Of Year Number], TRUE () )
+    )
+VAR CurrPerNum =
+    IF (
+        HASONEVALUE ( 'Date'[ Period Of Year Number] ),
+        FIRSTNONBLANK ( 'Date'[ Period Of Year Number], TRUE () )
+    )
+VAR CurrQtrNum =
+    IF (
+        HASONEVALUE ( 'Date'[ Quarter Of Year Number] ),
+        FIRSTNONBLANK ( 'Date'[ Quarter Of Year Number], TRUE () )
+    )
+RETURN
+    IF (
+        HASONEVALUE ( 'Date'[ Day Of Year Number] ),
+        CALCULATE (
+            [Measure],
+            FILTER (
+                ALL ( 'Date' ),
+                AND (
+                    'Date'[ Year Number]
+                        = CurrFY - 1,
+                    'Date'[ Day Of Year Number] = CurrDayNum
+                )
+            )
+        ),
+        IF (
+            HASONEVALUE ( 'Date'[ Week Of Year Number] ),
+            CALCULATE (
+                [Measure],
+                FILTER (
+                    ALL ( 'Date' ),
+                    AND (
+                        'Date'[ Year Number]
+                            = CurrFY - 1,
+                        'Date'[ Week Of Year Number] = CurrWeekNum
+                    )
+                )
+            ),
+            IF (
+                HASONEVALUE ( 'Date'[ Period Of Year Number] ),
+                CALCULATE (
+                    [Measure],
+                    FILTER (
+                        ALL ( 'Date' ),
+                        AND (
+                            'Date'[ Year Number]
+                                = CurrFY - 1,
+                            'Date'[ Period Of Year Number] = CurrPerNum
+                        )
+                    )
+                ),
+                IF (
+                    HASONEVALUE ( 'Date'[ Quarter Of Year Number] ),
+                    CALCULATE (
+                        [Measure],
+                        FILTER (
+                            ALL ( 'Date' ),
+                            AND (
+                                'Date'[ Year Number]
+                                    = CurrFY - 1,
+                                'Date'[ Quarter Of Year Number] = CurrQtrNum
+                            )
+                        )
+                    ),
+                    IF (
+                        HASONEVALUE ( 'Date'[ Year Number] ),
+                        CALCULATE (
+                           [Measure],
+                            FILTER ( ALL ( 'Date' ), 'Date'[ Year Number] = CurrFY - 1 )
+                        ),
+                        BLANK ()
+                    )
+                )
+            )
+        )
+    )
+
