@@ -4,9 +4,9 @@
 ## YTD total
 
 
-YTD PROFITS = TOTALYTD([Profit],'Date'[Date])
+	YTD PROFITS = TOTALYTD([Profit],'Date'[Date])
 
-ytd measure:=CALCULATE([sum or count],FILTER(ALL('date'),'date'[Year]=MAX('date'[Year])&&'date'[Date]<=MAX('date'[Date])))
+	ytd measure:=CALCULATE([sum or count],FILTER(ALL('date'),'date'[Year]=MAX('date'[Year])&&'date'[Date]<=MAX('date'[Date])))
 
 * use the measure you want to and add the date table
 * pretty straight forward calculation
@@ -20,29 +20,30 @@ Last Year YTD Profit = TOTALYTD('Internet Sales'[Profit],DATEADD('Date'[Date],-1
 * subtract off the 11 periods and set to month
 
 or 
-test = TOTALYTD([lead count],DATEADD('date'[Date],-12,month))
 
-test 2 = CALCULATE([lead count ly],DATESYTD('date'[Date]))
+	test = TOTALYTD([lead count],DATEADD('date'[Date],-12,month))
 
-test 3 = CALCULATE([lead count],DATEADD(DATESYTD('date'[Date]),-1,year))
+	test 2 = CALCULATE([lead count ly],DATESYTD('date'[Date]))
 
-test 4 = CALCULATE([lead count],SAMEPERIODLASTYEAR(DATESYTD('date'[Date])))
+	test 3 = CALCULATE([lead count],DATEADD(DATESYTD('date'[Date]),-1,year))
 
-test 9:=CALCULATE([lead count ly ytd],DATESYTD('date'[Date]))
+	test 4 = CALCULATE([lead count],SAMEPERIODLASTYEAR(DATESYTD('date'[Date])))
+
+	test 9:=CALCULATE([lead count ly ytd],DATESYTD('date'[Date]))
 
 
 
 ## Prior Year Amount
 
 
-Prior Year Profit = CALCULATE('Internet Sales'[Profit], SAMEPERIODLASTYEAR('Date'[Date]))
+	Prior Year Profit = CALCULATE('Internet Sales'[Profit], SAMEPERIODLASTYEAR('Date'[Date]))
 
 * use the expression you want to link to the measure
 * use the sameperiodlastyear function and link to the date table
 
 ## Rolling 12 month amount
 
-Rolling 12 Months Profit = CALCULATE('Internet Sales'[Profit], DATESBETWEEN('Date'[Date],DATEADD(FIRSTDATE('Date'[Date]),-11, MONTH),LASTDATE('Date'[Date])))
+	Rolling 12 Months Profit = CALCULATE('Internet Sales'[Profit], DATESBETWEEN('Date'[Date],DATEADD(FIRSTDATE('Date'[Date]),-11, 	MONTH),LASTDATE('Date'[Date])))
 
 * use the measure you want to calculate
 * use the datesbetween function and link to the date table
@@ -64,7 +65,7 @@ total days pended= CALCULATE(SUM(DATEDIM[WEEKDAY_FLAG]),DATESBETWEEN(DATEDIM[DAT
 note: in some cases the DATESBETWEEN function will not work and will spew the error: "Invalid Numeric Representation of a Date Value" error. 
 In this case use the following formula
 
-Days to complete:=CALCULATE(COUNTROWS('DateDim'),FILTER('DateDim',DateDim[DATE_VALUE]>=WildWorksMetaData[BertRecievedDate] && DateDim[DATE_VALUE]<=WildWorksMetaData[CompletionDate]&&DateDim[Business Day]=1)))
+	Days to complete:=CALCULATE(COUNTROWS('DateDim'),FILTER('DateDim',DateDim[DATE_VALUE]>=WildWorksMetaData[BertRecievedDate] && DateDim[DATE_VALUE]<=WildWorksMetaData[CompletionDate]&&DateDim[Business Day]=1)))
 
 * use the calculate function and count the rows in the datedim
 * use the filter function to count the rows that are equal to or greater than the startdate and lesser than or equal to the enddate with the condition of the business day value being true. 
@@ -76,116 +77,116 @@ Days to complete:=CALCULATE(COUNTROWS('DateDim'),FILTER('DateDim',DateDim[DATE_V
 First Date Calculation (not used by itself, used as a parameter (rolling 12 month function) 
 used to nest in more complex calculations
 
-First Purchase Date = FIRSTDATE('Sale'[Invoice Date Key])
+	First Purchase Date = FIRSTDATE('Sale'[Invoice Date Key])
 
 
 ## Last Purchase Date 
 
-Last Purchase Day = LASTDATE('Sale'[Invoice Date Key])
+	Last Purchase Day = LASTDATE('Sale'[Invoice Date Key])
 
 ===================
 
 ## YTD calculation
 
-YTD Sales = TOTALYTD([Total Sales],'Date'[Date])
+	YTD Sales = TOTALYTD([Total Sales],'Date'[Date])
 
-QTD Sales = TOTALQTD([Total Sales],'Date'[Date])
+	QTD Sales = TOTALQTD([Total Sales],'Date'[Date])
 
-MTD Sales = TOTALMTD([Total Sales],'Date'[Date])
+	MTD Sales = TOTALMTD([Total Sales],'Date'[Date])
 
 
 ## Prior Year Sales
 
-Prior Year Sales = 
+	Prior Year Sales = 
 	CALCULATE([Total Sales],
 		SAMEPERIODLASTYEAR('Date'[Date])
 		)
 
 YOY Sales
 
-YOY Sales = [Total Sales]-[Prior Year Sales]
+	YOY Sales = [Total Sales]-[Prior Year Sales]
 
 YOY Growth
 
-YOY % Growth = DIVIDE([YOY Sales],[Prior Year Sales])
+	YOY % Growth = DIVIDE([YOY Sales],[Prior Year Sales])
 
 
 ## Prior Month Sales
 
-Prior Month Sales = 
+	Prior Month Sales = 
 	CALCULATE([Total Sales],
 		PARALLELPERIOD('Date'[Date],-1,MONTH)
 	)
 
 ## Fiscal YTD Sales
 
-Fiscal YTD Sales = 
-TOTALYTD([Total Sales],'Date'[Date],"05/31")
+	Fiscal YTD Sales = 
+	TOTALYTD([Total Sales],'Date'[Date],"05/31")
 
 Sales on a regional level (for comparision)
 
-Southeast Sales = 
-IF([Total Sales]>0 ,
-CALCULATE([Total Sales],
+	Southeast Sales = 
+	IF([Total Sales]>0 ,
+	CALCULATE([Total Sales],
 	'City'[Sales Territory]="Southeast"),
 	BLANK())
 
-All sales 
-All Territory Sales = 
-CALCULATE([Total Sales],
+	All sales 
+	All Territory Sales = 
+	CALCULATE([Total Sales],
 	ALL('City'[Sales Territory]))
 
-All Territory Sales = 
-IF([Total Sales]>0,
-CALCULATE([Total Sales],
+	All Territory Sales = 
+	IF([Total Sales]>0,
+	CALCULATE([Total Sales],
 	ALL('City'[Sales Territory])),
 	BLANK())
 
-Territory % of Total = DIVIDE([Total Sales],[All Territory Sales])
+	Territory % of Total = DIVIDE([Total Sales],[All Territory Sales])
 
 
 average order for a customer (customer table to sales table, one to many) (calculated column)
 
-Average Order = 
-AVERAGEX(
+	Average Order = 
+	AVERAGEX(
 	RELATEDTABLE('Sale'),
 		'Sale'[SALES AMOUNT])
 
 first purchase date
 
-First Purchase date = MINX(RELATEDTABLE(Sale),'Sale'[Invoice Date Key])
+	First Purchase date = MINX(RELATEDTABLE(Sale),'Sale'[Invoice Date Key])
 
 ## Hack Prior Calculation when using non contiguous date table
 
 Note: absolutely not recommended. Only if you walk onto a shitstorm of a job and they fucked up the architecture of their data model
 
-DEFINE 
-MEASURE 'Fact Table'[Lead Event LY] = VAR CurrFY =
+	DEFINE 
+	MEASURE 'Fact Table'[Lead Event LY] = VAR CurrFY =
     IF (
         HASONEVALUE ( 'Date'[ Year Number] ),
         FIRSTNONBLANK ( 'Date'[ Year Number], TRUE () )
     )
-VAR CurrDayNum =
+	VAR CurrDayNum =
     IF (
         HASONEVALUE ( 'Date'[ Day Of Year Number] ),
         FIRSTNONBLANK ( 'Date'[ Day Of Year Number], TRUE () )
     )
-VAR CurrWeekNum =
+	VAR CurrWeekNum =
     IF (
         HASONEVALUE ( 'Date'[ Week Of Year Number] ),
         FIRSTNONBLANK ( 'Date'[ Week Of Year Number], TRUE () )
     )
-VAR CurrPerNum =
+	VAR CurrPerNum =
     IF (
         HASONEVALUE ( 'Date'[ Period Of Year Number] ),
         FIRSTNONBLANK ( 'Date'[ Period Of Year Number], TRUE () )
     )
-VAR CurrQtrNum =
+	VAR CurrQtrNum =
     IF (
         HASONEVALUE ( 'Date'[ Quarter Of Year Number] ),
         FIRSTNONBLANK ( 'Date'[ Quarter Of Year Number], TRUE () )
     )
-RETURN
+	RETURN
     IF (
         HASONEVALUE ( 'Date'[ Day Of Year Number] ),
         CALCULATE (
