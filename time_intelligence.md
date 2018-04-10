@@ -52,7 +52,7 @@ or
 
 ## Calculate the total number of business days
 
-total days pended= CALCULATE(SUM(DATEDIM[WEEKDAY_FLAG]),DATESBETWEEN(DATEDIM[DATE_VALUE],COMPLETEDTICKETS[PendStartDate],COMPLETEDTICKETS[PendEndDate])) 
+	total days pended= CALCULATE(SUM(DATEDIM[WEEKDAY_FLAG]),DATESBETWEEN(DATEDIM[DATE_VALUE],COMPLETEDTICKETS[PendStartDate],COMPLETEDTICKETS[PendEndDate])) 
 
 * set up a weekday or business day flag in the date table and set the data type to numeric
 * Sum the total number of business days or weekdays and use the dates between function linking to the date dimension and then use the dates
