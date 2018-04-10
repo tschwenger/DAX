@@ -5,14 +5,14 @@
 // using add columns with values function
 // will get you all the values in the column with the measure values
 //syntax:
-EVALUATE
-ADDCOLUMNS(
-	VALUES()  //table and column name
-	,"cube value" //name of column you are creating
-	, // measure
-	,"calculate" // name of column
-	, //addition measure
-	)
+	EVALUATE
+	ADDCOLUMNS(
+		VALUES()  //table and column name
+		,"cube value" //name of column you are creating
+		, // measure
+		,"calculate" // name of column
+		, //addition measure
+		)
 //add an order by clause is optional	
 	
 	
@@ -26,24 +26,24 @@ ADDCOLUMNS(
 
 
 //sytax
-EVALUATE
-ADDCOLUMNS(
-	filter(														//using filter to filter down the result set
-		SUMMARIZE('Fact table'				// table to summarize
-			,'Date'[Fiscal Year Number]							// group by condition for summarize function
-			,'Date'[Fiscal Week Number]							// additional group by condition for summarize function
-			,'Account-Subaccount'[Type]					// additional group by condition for summarize function
-			)
-			,'Date'[Fiscal Year Number]=2017)					// filter condition in the filter function
-				,"cube value"									// column name added to the add columns function
-				,round([Revenue Weekly],0)					//column calculation in the addcolumns function
-				,"calculate"
-				,round([Revenue Weekly calculate no filter],0)
-				,"pp weekly "
-				,round([PP Weekly ],0)
-				,"pp weekly  not using unnesserary filter function"
-				,round([pp  calculate no filter],0)
-)
+	EVALUATE
+	ADDCOLUMNS(
+		filter(														//using filter to filter down the result set
+			SUMMARIZE('Fact table'				// table to summarize
+				,'Date'[Fiscal Year Number]							// group by condition for summarize function
+				,'Date'[Fiscal Week Number]							// additional group by condition for summarize function
+				,'Account-Subaccount'[Type]					// additional group by condition for summarize function
+				)
+				,'Date'[Fiscal Year Number]=2017)					// filter condition in the filter function
+					,"cube value"									// column name added to the add columns function
+					,round([Revenue Weekly],0)					//column calculation in the addcolumns function
+					,"calculate"
+					,round([Revenue Weekly calculate no filter],0)
+					,"pp weekly "
+					,round([PP Weekly ],0)
+					,"pp weekly  not using unnesserary filter function"
+					,round([pp  calculate no filter],0)
+	)
 //optional group by context can be added
 
 
@@ -52,8 +52,8 @@ ADDCOLUMNS(
 // equivalent to the query above
 
 
-EVALUATE
-FILTER(															//filtering down the summarize function
+	EVALUATE
+	FILTER(															//filtering down the summarize function
 	
 		SUMMARIZE('Fact table'									// table to operate on 
 			,'Date'[Fiscal Year Number]							// group by condition	
@@ -68,7 +68,7 @@ FILTER(															//filtering down the summarize function
 				,"pp weekly  not using unnesserary filter function"
 				,round([pp calculate no filter],0))
 	,'Date'[Fiscal Year Number]=2017)							// filter condition for the filter funcaiton			
-order by 'Date'[Fiscal Week Number]								// optional order by condition
+	order by 'Date'[Fiscal Week Number]								// optional order by condition
 
 
 
@@ -77,8 +77,8 @@ order by 'Date'[Fiscal Week Number]								// optional order by condition
 
 
 
-EVALUATE
-ADDCOLUMNS(													//adds columns
+	EVALUATE
+	ADDCOLUMNS(													//adds columns
 	
 		SUMMARIZE('Fact table'
 			,'Date'[Fiscal Year Number]
@@ -93,15 +93,15 @@ ADDCOLUMNS(													//adds columns
 				,round([Weekly pp],0)
 				,"pp weekly  not using unnesserary filter function"
 				,round([pp calculate no filter],0)
-)
-order by 'Date'[Fiscal Week Number],'Account-Subaccount'[Tuition Type]
+	)
+	order by 'Date'[Fiscal Week Number],'Account-Subaccount'[Tuition Type]
 
 
 //ditching the add columns function
 //equivalent to the above function
 
 
-EVALUATE	
+	EVALUATE	
 		SUMMARIZE('Fact table'
 			,'Date'[Fiscal Year Number]
 			,'Date'[Fiscal Week Number]
@@ -115,33 +115,33 @@ EVALUATE
 				,"pp weekly  not using unnesserary filter function"
 				,round([pp  calculate no filter],0)
 				)
-order by 'Date'[Fiscal Week Number],'Account-Subaccount'[Tuition Type]
+	order by 'Date'[Fiscal Week Number],'Account-Subaccount'[Tuition Type]
 
 
 
 //using summarizecolumns function
 // brings back a single result
 
-SUMMARIZECOLUMNS(
-EVALUATE SUMMARIZECOLUMNS(
+	SUMMARIZECOLUMNS(
+	EVALUATE SUMMARIZECOLUMNS(
 
-FILTER(VALUES('Org'[ Name]),'Org'[Name]="R2d2"),
+	FILTER(VALUES('Org'[ Name]),'Org'[Name]="R2d2"),
 
-FILTER(SUMMARIZE('Date', 'Date'[Fiscal Year], 'Date'[Fiscal Quarter Of Year], 'Date'[Fiscal Period]), ('Date'[Fiscal Year] = "FY2017" && 'Date'[Fiscal Quarter Of Year] = "Q1" && 'Date'[Fiscal Period] = "FY2017 P01")),
+	FILTER(SUMMARIZE('Date', 'Date'[Fiscal Year], 'Date'[Fiscal Quarter Of Year], 'Date'[Fiscal Period]), ('Date'[Fiscal Year] = "FY2017" && 'Date'[Fiscal Quarter Of Year] = "Q1" && 'Date'[Fiscal Period] = "FY2017 P01")),
 
-"column name",CALCULATE([measure],'Type'[Key]=1,'Scenario'[ScenarioKey]=1))
+	"column name",CALCULATE([measure],'Type'[Key]=1,'Scenario'[ScenarioKey]=1))
 
 
 //equivalent to the above
 
-EVALUATE
-filter(	
-SUMMARIZECOLUMNS(	
-	'Organization'[District Name]
-	,'Date'[Fiscal Year]
-	, 'Date'[Fiscal Quarter Of Year]
-	, 'Date'[Fiscal Period]
-	,"GL Selection v LY Pct"
-	,CALCULATE([GL Balance Selection v LY Pct])
-),'Organization'[District Name]="R2 D2"&& 'Date'[Fiscal Year] = "FY2017" && 'Date'[Fiscal Quarter Of Year] = "Q1" && 'Date'[Fiscal Period] = "FY2017 P01"
-)
+	EVALUATE
+	filter(	
+	SUMMARIZECOLUMNS(	
+		'Organization'[District Name]
+		,'Date'[Fiscal Year]
+		, 'Date'[Fiscal Quarter Of Year]
+		, 'Date'[Fiscal Period]
+		,"GL Selection v LY Pct"
+		,CALCULATE([GL Balance Selection v LY Pct])
+	),'Organization'[District Name]="R2 D2"&& 'Date'[Fiscal Year] = "FY2017" && 'Date'[Fiscal Quarter Of Year] = "Q1" && 'Date'[Fiscal Period] = "FY2017 P01"
+	)
