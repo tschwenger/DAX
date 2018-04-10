@@ -17,10 +17,10 @@ In the case of using the an x function, it is the opposite. One is summarizing a
 
 * example: find out the average quantity purchased by product in your product dimension. 
 
-Average Order = 
-AVERAGEX(
-	RELATEDTABLE('Sale'),
-		'Sale'[SALES AMOUNT])
+	Average Order = 
+	AVERAGEX(
+		RELATEDTABLE('Sale'),
+			'Sale'[SALES AMOUNT])
     
 #### Note: this could be created as a measure or a calculated field
 
