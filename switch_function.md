@@ -14,68 +14,69 @@ painful to update, change or reproduce (especially if it's someone elses code). 
 
 ## Sytax
 
-SWITCH( expression , value , result [, value, result] … [, else] ) 
+	SWITCH( expression , value , result [, value, result] … [, else] ) 
 
 Example
 
-New Month = 
+	New Month = 
 
-SWITCH('Date'[Calendar Month Number],
+	SWITCH('Date'[Calendar Month Number],
 
-	1,"January",
+		1,"January",
 	
-	2,"Feb",
+		2,"Feb",
 	
-	3,"mar",
+		3,"mar",
 	
-	4,"april",
+		4,"april",
 	
-	5,"may",
+		5,"may",
 	
-	6,"jun",
+		6,"jun",
 	
-	7,"jul",
+		7,"jul",
 	
-	8,"aug",
+		8,"aug",
 	
-	9,"sep",
+		9,"sep",
 	
-	10,"oct",
+		10,"oct",
 	
-	11,"nov",
+		11,"nov",
 	
-	12,"dec")
+		12,"dec")
   
 ###  IF versus switch
   
 * if statement
 
-Population Groups = 
 
-IF('StatePopulation'[Population Ranking]<10,"Top 10",
+		Population Groups = 
 
-IF('StatePopulation'[Population Ranking]<20,"11-20",
+		IF('StatePopulation'[Population Ranking]<10,"Top 10",
 
-	IF('StatePopulation'[Population Ranking]<30,"21-30",
+		IF('StatePopulation'[Population Ranking]<20,"11-20",
+
+		IF('StatePopulation'[Population Ranking]<30,"21-30",
 	
-		IF('StatePopulation'[Population Ranking]<40,"31-40",
+			IF('StatePopulation'[Population Ranking]<40,"31-40",
 			
 			"other"))))	
       
  * Switch Statement
 
-Population groups2 = 
+		Population groups2 = 
 
-SWITCH(TRUE(),
+		SWITCH(TRUE(),
 	
-	'StatePopulation'[Population Ranking]<10,"Top 10",
+			'StatePopulation'[Population Ranking]<10,"Top 10",
 	
-	'StatePopulation'[Population Ranking]<10,"Top 20",
+			'StatePopulation'[Population Ranking]<10,"Top 20",
 	
-	'StatePopulation'[Population Ranking]<10,"Top 30",
+			'StatePopulation'[Population Ranking]<10,"Top 30",
 	
-	'StatePopulation'[Population Ranking]<10,"Top 40",
+			'StatePopulation'[Population Ranking]<10,"Top 40",
 	
-	"other")
+			"other")
  
   
