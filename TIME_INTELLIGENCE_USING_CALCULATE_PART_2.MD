@@ -9,19 +9,19 @@ SYNTAX
 * ALL IS USED TO BRING BACK ENTIRE DATE TABLE, IT IS THEN FILTERED TO BRING BACK THE MAX YEAR
 
 
-CALCULATE(
-	[EXPRESSION],
-	FILTER(
-		ALL('DATE'),
-		DATE[YEAR]=MAX(DATE[YEAR]) &&
-		DATE[DATE]<=MAX(DATE[DATE)
+	CALCULATE(
+		[EXPRESSION],
+		FILTER(
+			ALL('DATE'),
+			DATE[YEAR]=MAX(DATE[YEAR]) &&
+			DATE[DATE]<=MAX(DATE[DATE)
+			)
 		)
-	)
 
 EXAMPLE:
 
-YTD SALES = 
-CALCULATE(
+	YTD SALES = 
+	CALCULATE(
 	[Quantity Sold],
 	FILTER(ALL('Date'),
 		'Date'[Year]=MAX('Date'[Year]) &&
@@ -36,25 +36,25 @@ SYNTAX
 
 * THREE FILTER CRITERIA, THE MAX YEAR, MAX MONTH, AND THE MAX DATE
 
-CALCULATE(
-	[EXPRESSION],
-	FILTER(
-		ALL('DATE'),
-		DATE[YEAR]=MAX(DATE[YEAR]) &&
-		DATE[MONTH]=MAX(DATE[MONTH]) &&
-		DATE[DATE]<=MAX(DATE[DATE)
+	CALCULATE(
+		[EXPRESSION],
+		FILTER(
+			ALL('DATE'),
+			DATE[YEAR]=MAX(DATE[YEAR]) &&
+			DATE[MONTH]=MAX(DATE[MONTH]) &&
+			DATE[DATE]<=MAX(DATE[DATE)
+			)
 		)
-	)
 
 EXAMPLE: 
 
-MTD SALES = 
-CALCULATE(
-	[Quantity Sold],
-	FILTER(ALL('Date'),
-		'Date'[Year]=MAX('Date'[Year]) &&
-		'Date'[Month]=MAX('Date'[Month]) &&
-			'Date'[Date]<=MAX('Date'[Date])))
+	MTD SALES = 
+	CALCULATE(
+		[Quantity Sold],
+		FILTER(ALL('Date'),
+			'Date'[Year]=MAX('Date'[Year]) &&
+			'Date'[Month]=MAX('Date'[Month]) &&
+				'Date'[Date]<=MAX('Date'[Date])))
 
 ## 12 MONTHS ROLLING TOTAL
 
@@ -70,9 +70,9 @@ DATESBETWEEN: returns a table that contains a column of dates that begins with t
 
 EXAMPLE:
 
-12 MONT ROLLING SALES = 
+	12 MONT ROLLING SALES = 
 
-CALCULATE(
+	CALCULATE(
 	[Total Sales],
 	DATESBETWEEN('Date'[Date],
 		NEXTDAY(SAMEPERIODLASTYEAR(LASTDATE('Date'[Date]))),
@@ -97,8 +97,8 @@ keys:
 
 EXAMPLE:
 
-3 Month Rolling Total = 
-CALCULATE(
+	3 Month Rolling Total = 
+	CALCULATE(
 	[Total Sales],
 	DATESBETWEEN('Date'[Date],
 		NEXTDAY(DATEADD(LASTDATE('Date'[Date]),-3,MONTH)),
@@ -123,5 +123,5 @@ jUST USE THE DIVIDE FUNCTION
 
 EXAMPLE:
 
-3 MONTH MOVING AVERAGE SALES = 
- DIVIDE([3 Month Rolling Total],3)
+	3 MONTH MOVING AVERAGE SALES = 
+ 	DIVIDE([3 Month Rolling Total],3)
