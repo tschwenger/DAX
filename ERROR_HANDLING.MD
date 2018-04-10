@@ -29,20 +29,20 @@ LASTDATE
 
 EXAMPLE MAX VS LAST DATE:
 
-CALCULATE(
-	SUM('MSFT Stock Price'[Close]),
-	MAX('Date'[Date])) //table filter expression
+	CALCULATE(
+		SUM('MSFT Stock Price'[Close]),
+		MAX('Date'[Date])) //table filter expression
 
 * THIS WILL FAIL BECAUSE THE FUNCTION EXPECTS A TABLE FILTER EXPRESSION
 
 FIX BY USING THE FILTER FUNCTION:
 
-CALCULATE(
-	SUM('MSFT Stock Price'[Close]),
-	FILTER(
-		'DATE',
-		MAX('Date'[Date])) //table filter expression
-)
+	CALCULATE(
+		SUM('MSFT Stock Price'[Close]),
+		FILTER(
+			'DATE',
+			MAX('Date'[Date])) //table filter expression
+	)
 
 NOTE: CTRL +K+C WILL COMMENT DAX CODE
 
@@ -50,32 +50,32 @@ NOTE: CTRL +K+U WILL UNCOMMENT DAX CODE
 
 ### EXAMPLE FILTER VS CALCULATETABLE
 
-Closing Price (EOM) Calculate = 
-CALCULATE (
-       [Close Price], 
-       CALCULATETABLE(
-            LASTNONBLANK('Date'[Date],//MAY 15 2017 
+	Closing Price (EOM) Calculate = 
+		CALCULATE (
+    		   [Close Price], 
+  		     CALCULATETABLE(
+      	      LASTNONBLANK('Date'[Date],//MAY 15 2017 
 						   
-            PARALLELPERIOD ( 
-				'Date'[Date], 
-				0, 
-				MONTH )
-				[Close Price]),)))
+       		     PARALLELPERIOD ( 
+					'Date'[Date], 
+					0, 
+					MONTH )
+					[Close Price]),)))
 
 SO WHY DIDN'T WE USE THE FILTER FUNCTION INSTEAD OF THE CALCULATE TABLE?
 
 
-Closing Price (EOM) FILTER = 
-CALCULATE (
-     [Close Price], 
-	 FILTER(	
-			LASTNONBLANK('Date'[Date],
-						[Close Price]),		
-			//1=1))
-			PARALLELPERIOD ( 
-				'Date'[Date], 
-				0, 
-				MONTH)))
+	Closing Price (EOM) FILTER = 
+	CALCULATE (
+  	   [Close Price], 
+		 FILTER(	
+				LASTNONBLANK('Date'[Date],
+							[Close Price]),		
+				//1=1))
+				PARALLELPERIOD ( 
+					'Date'[Date], 
+					0, 
+					MONTH)))
 
 * THIS FAILS, BECAUSE YOU CANNOT HAVE THE TABLE FILTER EXPRESSION
 * GOING TO RETURN A LIST OF DATES, WHICH THE FILTER FUNCTION DOESN'T ALLOW
