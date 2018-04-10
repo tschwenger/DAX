@@ -11,18 +11,19 @@
 
 EXAMPLE SYNTAX:
 
-MINX(
-	FILTER(ORDERS,
-		ORDERS[CUSTOMER]=EARLIER(ORDERS[CUSTOMER]),
-	ORDERS[ORDERDATE])
+	MINX(
+		FILTER(ORDERS,
+			ORDERS[CUSTOMER]=EARLIER(ORDERS[CUSTOMER]),
+		ORDERS[ORDERDATE])
 
+Second example:
 
-Subdivision Address = 
-MINX(
-    FILTER(
-        'MLS', 
-        'MLS'[Common Name of Sub] = EARLIER('MLS'[Common Name of Sub])),        
-    'MLS'[Address])
+	Subdivision Address = 
+	MINX(
+ 	   FILTER(
+ 	       'MLS', 
+ 	       'MLS'[Common Name of Sub] = EARLIER('MLS'[Common Name of Sub])),        
+ 	   'MLS'[Address])
 
 
 ## VARIABLES (SQL SERVER 2016 AND LATER)
@@ -38,12 +39,12 @@ CONTEXT
 
 EXAMPLE:
 
-Subdivision Address VARIABLE = 
-VAR 
-    CURRENTSUBDIVISION='MLS'[Common Name of Sub]
-RETURN 
-MINX(
-    FILTER(
-        'MLS', 
-        'MLS'[Common Name of Sub] = CURRENTSUBDIVISION),        
-    'MLS'[Address])
+	Subdivision Address VARIABLE = 
+	VAR 
+	    CURRENTSUBDIVISION='MLS'[Common Name of Sub]
+	RETURN 
+	MINX(
+ 	   FILTER(
+   	     'MLS', 
+  	      'MLS'[Common Name of Sub] = CURRENTSUBDIVISION),        
+   	 'MLS'[Address])
