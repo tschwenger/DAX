@@ -156,7 +156,9 @@ first purchase date
 
 	First Purchase date = MINX(RELATEDTABLE(Sale),'Sale'[Invoice Date Key])
 
-## Hack Prior Calculation when using non contiguous date table
+## Hack Prior Year Calculation when using non contiguous date table
+
+Example: your finance department uses a 13th period or q5 every fourth year or only uses 364 days a year for 3 years and 371 every third year. Makes no fucking sense, but finance people like cooking books. 
 
 Note: absolutely not recommended. Only if you walk onto a shitstorm of a job and they fucked up the architecture of their data model
 
