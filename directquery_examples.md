@@ -5,6 +5,7 @@
 // using add columns with values function
 // will get you all the values in the column with the measure values
 //syntax:
+
 	EVALUATE
 	ADDCOLUMNS(
 		VALUES()  //table and column name
@@ -26,6 +27,7 @@
 
 
 //sytax
+
 	EVALUATE
 	ADDCOLUMNS(
 		filter(														//using filter to filter down the result set
