@@ -147,3 +147,18 @@
 		,CALCULATE([GL Balance Selection v LY Pct])
 	),'Organization'[District Name]="R2 D2"&& 'Date'[Fiscal Year] = "FY2017" && 'Date'[Fiscal Quarter Of Year] = "Q1" && 'Date'[Fiscal Period] = "FY2017 P01"
 	)
+
+//similar to the above code, yields one coordinate which is good for dev and acceptance testing
+
+	EVALUATE
+		SELECTCOLUMNS(
+			filter(	
+				SUMMARIZECOLUMNS(	
+				'Date'[Fiscal Period]
+				,'CC'[Company ID]
+				,"Measure Name"
+				,CALCULATE([Measure])
+			) 
+			,'Date'[Fiscal Period] = "FY2017 P10" &&'CC'[Company ID]="ID"
+		)
+		,"Measure Name",round([Measure],4))
