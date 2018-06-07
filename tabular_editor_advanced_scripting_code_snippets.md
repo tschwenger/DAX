@@ -7,11 +7,11 @@
 
 * This snippet can also be applied to measures for a particular table
 
-    foreach(var table in Model.Tables)
+        foreach(var table in Model.Tables)
       {
         foreach(var measure in table.Measures)
       {
           // Foramat every measure in Model to the required format.
           measure.FormatString = "#,##0.000000;(#,##0.000000)";
       }
-    }
+        }
