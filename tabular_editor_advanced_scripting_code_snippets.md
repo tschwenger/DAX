@@ -15,3 +15,14 @@
           measure.FormatString = "#,##0.000000;(#,##0.000000)";
       }
         }
+
+* This would be an update for a particular table:
+
+        foreach(var table in Model.Tables["Fact Table"])
+                {
+                foreach(var measure in table.Measures["Fact Table"])
+                {
+        // Format every measure in table "fact table" to the required format.
+        measure.FormatString = "#,##0.000000;(#,##0.000000)";
+         }
+                }
