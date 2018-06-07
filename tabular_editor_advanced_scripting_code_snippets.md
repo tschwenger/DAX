@@ -28,3 +28,18 @@
                 }
                 
  Note: The developer needs to select the tables he/she is operating on in the editor
+ 
+ ## Create a standard format for all measures in the cube
+ 
+         ,
+          {
+            "ID": "STANDARD_FORMAT",
+            "Name": "All measures should use our standard format",
+            "Category": "Metadata",
+            "Description": "There is a newly established format for all of our Measures. We should be using this.",
+            "Severity": 1,
+            "Scope": "Measure",
+            "Expression": "FormatString <> \"#,##0.000000;(#,##0.000000)\"",
+            "FixExpression": "FormatString = \"#,##0.000000;(#,##0.000000)\";",
+            "CompatibilityLevel": 0
+          }
