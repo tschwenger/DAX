@@ -18,11 +18,13 @@
 
 * This would be an update for a particular table:
 
-        foreach(var table in Model.Tables["Fact Table"])
+        foreach(var table in Selected.Tables)
                 {
-                foreach(var measure in table.Measures["Fact Table"])
+                foreach(var measure in table.Measures)
                 {
         // Format every measure in table "fact table" to the required format.
         measure.FormatString = "#,##0.000000;(#,##0.000000)";
          }
                 }
+                
+ Note: The developer needs to select the tables he/she is operating on in the editor
