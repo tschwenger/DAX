@@ -22,7 +22,7 @@
                 {
                 foreach(var measure in table.Measures)
                 {
-        // Format every measure in table "fact table" to the required format.
+        // Format every measure in table the selected tables to the required format.
         measure.FormatString = "#,##0.000000;(#,##0.000000)";
          }
                 }
