@@ -28,8 +28,11 @@
                 }
                 
  Note: The developer needs to select the tables he/she is operating on in the editor
+ This is good for applying changes to the measure format
  
  ## Create a standard format for all measures in the cube
+ 
+ * this would be a good practice to implement when starting dev on a project
  
          ,
           {
