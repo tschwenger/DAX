@@ -162,3 +162,17 @@
 			,'Date'[Fiscal Period] = "FY2017 P10" &&'CC'[Company ID]="ID"
 		)
 		,"Measure Name",round([Measure],4))
+
+### Good for test cases
+
+note this brings back a column/table of values that is a good use case for testing sql output vs dax output
+
+		EVALUATE
+		SELECTCOLUMNS(
+			CROSSJOIN(
+				FILTER(VALUES('Data Scenario'[Data Scenario]),'Data Scenario'[Data Scenario] in {"Actual","LY","LY Var","LY Var %"} )
+				,FILTER(VALUES('Time Calculation'[Time Calculation Name]),'Time Calculation'[Time Calculation Name] in {"Selection","YTD","QTD","PTD","WTD"})
+				)
+			,"Average Recovery"
+			,CALCULATE([Average Recovery],'Date'[Fiscal Period Number]=201808,Organization[District Name]="R03 D07")
+			)
