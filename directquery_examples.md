@@ -176,3 +176,31 @@ note this brings back a column/table of values that is a good use case for testi
 			,"Average Recovery"
 			,CALCULATE([Average Recovery],'Date'[Fiscal Period Number]=201808,Organization[District Name]="R03 D07")
 			)
+
+
+### another example of selectcolumns
+
+		EVALUATE
+
+		filter(
+		Selectcolumns(
+			CROSSJOIN(
+				filter(VALUES('Date'[Fiscal Week]),left('Date'[Fiscal Week],6) in {"FY2018","FY2019"})
+				,//filter(
+				VALUES(Organization[Region Name])
+				//,Organization[Region Name]="R01 region 01" )
+				,VALUES(Organization[District Name])
+				,FILTER(VALUES('Data Scenario'[Data Scenario]),'Data Scenario'[Data Scenario] in {"Actual"})//,"LY Var %","Plan Var %"})
+				//,FILTER(VALUES('Data Scenario'[Data Scenario]),'Data Scenario'[Data Scenario] in {"Plan Var %"})
+
+				)
+			,"Fiscal Week",'Date'[Fiscal Week]	
+			,"Region",Organization[Region Name]	
+			,"District",Organization[District Name]
+			,"data scenario",'Data Scenario'[Data Scenario]
+			,"labor hour estimate",[Labor Hours Estimated (Memo)]
+			,"Labor hour regular",[Labor Hours]
+
+
+			)
+			,[Labor Hours]>0)
