@@ -2,7 +2,7 @@
 
 # When you don't have a contiguous date table, because your company is clueless
 
-## YTD
+### YTD
 
           YTD Measure=
           VAR SelectedFiscalYearNumber = SELECTEDVALUE ( 'Date'[Fiscal Year Number] )
@@ -16,7 +16,7 @@
               )
 
 
-## QTD
+### QTD
 
         QTD Measure=
         VAR SelectedFiscalQuarterNumber = SELECTEDVALUE ( 'Date'[Fiscal Quarter Number] )
@@ -30,7 +30,7 @@
         )
         
 
-## PTD
+### PTD
 
         PTD measure=
         
@@ -46,8 +46,10 @@
 
 
 
-## LY
-          LY Measure=
+### LY
+
+
+                 LY Measure=
           CALCULATE (
               [Measure],
               ALL ( 'Date' ),
@@ -65,8 +67,12 @@
           )
 
 
-## LY YTD
-          
+### LY YTD
+
+
+   
+   
+   
           LY YTD Measure=
           VAR SelectedFiscalYearNumber = SELECTEDVALUE ( 'Date'[Fiscal Year Number] ) - 1
           VAR MaxFiscalDayOfYear = MAX ( 'Date'[Fiscal Day Of Year Number] )
@@ -79,7 +85,10 @@
               )
 
 
-##LY QTD
+### LY QTD
+
+
+
 
             LY QTD=
             VAR SelectedFiscalQuarterNumber = SELECTEDVALUE ( 'Date'[Fiscal Quarter Number] ) - 10
@@ -92,7 +101,9 @@
                     'Date'[Fiscal Day Of Quarter Number] <= MaxFiscalDayOfQuarter
                 )
 
-##LY PTD
+### LY PTD
+
+
 
 
           LY PTD Measure=
