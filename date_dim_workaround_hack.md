@@ -117,3 +117,27 @@
                     'Date'[Fiscal Period Number] = SelectedFiscalPeriodNumber,
                     'Date'[Fiscal Day Of Period Number] <= MaxFiscalDayOfPeriod
                 )
+
+## LY (periodic snapshot)
+
+                              Measure LY Periodic:=
+                              var datetable =		
+                                                            TREATAS(
+                                                            SELECTCOLUMNS(
+                                                                      DimDate,
+                                                                      "CalendarDate",
+                                                                                LOOKUPVALUE(
+                                                                                DimDate[CalendarDate],
+                                                                                DimDate[DayOfYearNumber],DimDate[DayOfYearNumber],
+                                                                                DimDate[YearNumber],DimDate[YearNumber]-1
+                                                                                )
+                                                                      ),
+                                                                      DimDate[CalendarDate]
+                                                                      )
+                                                                      return
+
+                                        CALCULATE(
+                                                  [Measure],
+                                                  all(DimDate),
+                                                  datetable
+                                                                      )	
