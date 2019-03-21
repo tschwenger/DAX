@@ -120,24 +120,18 @@
 
 ## LY (periodic snapshot)
 
-                              Measure LY Periodic:=
-                              var datetable =		
-                                                            TREATAS(
-                                                            SELECTCOLUMNS(
-                                                                      DimDate,
-                                                                      "CalendarDate",
-                                                                                LOOKUPVALUE(
-                                                                                DimDate[CalendarDate],
-                                                                                DimDate[DayOfYearNumber],DimDate[DayOfYearNumber],
-                                                                                DimDate[YearNumber],DimDate[YearNumber]-1
-                                                                                )
-                                                                      ),
-                                                                      DimDate[CalendarDate]
-                                                                      )
-                                                                      return
-
-                                        CALCULATE(
-                                                  [Measure],
-                                                  all(DimDate),
-                                                  datetable
-                                                                      )	
+          Measure LY Periodic :=
+          VAR datetable =
+              TREATAS (
+                  SELECTCOLUMNS (
+                      DimDate,
+                      "CalendarDate", LOOKUPVALUE (
+                          DimDate[CalendarDate],
+                          DimDate[DayOfYearNumber], DimDate[DayOfYearNumber],
+                          DimDate[YearNumber], DimDate[YearNumber] - 1
+                      )
+                  ),
+                  DimDate[CalendarDate]
+              )
+          RETURN
+              CALCULATE ( [Measure], ALL ( DimDate ), datetable )
