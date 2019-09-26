@@ -137,3 +137,19 @@ EXAMPLE:
 				[Close Price])))
 
 * SIMILAR TO THE ABOVE CALCULATION, EXCEPT, GRAB THE LAST NON BLANK FROM THE PREVIOUS MONTH
+
+
+* Scales best for big tables (hundred million to billion >)
+
+		CALCULATE(SUM(Facttable[columntosum] ),
+				       All(datetable),
+				       Filter(
+					      All(datetable[CalendarDate]),
+					      CONTAINS(
+						       SUMMARIZE(ADDCOLUMNS( VALUES(datetable[CalendarDate]),"Date-1",MAX(datetable[CalendarDate])),
+						       [Date-1]
+						       ),
+						       [Date-1],datetable[CalendarDate]
+					      )
+				       )
+		)
