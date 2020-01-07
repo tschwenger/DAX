@@ -118,6 +118,8 @@
                     'Date'[Fiscal Day Of Period Number] <= MaxFiscalDayOfPeriod
                 )
 
+
+
 ## LY (periodic snapshot)
 
           Measure LY Periodic :=
@@ -135,3 +137,126 @@
               )
           RETURN
               CALCULATE ( [Measure], ALL ( DimDate ), datetable )
+
+
+### Last Week WTD 
+
+- this factors in switching over on the new year since weeks are trickiest
+
+          LastWeekWTDQuantity=
+          VAR CurrentWeek =
+              SELECTEDVALUE ( 'DimDate'[WeekofYearNumber] )
+          VAR CurrentYear =
+              SELECTEDVALUE ( 'DimDate'[YearNumber] )
+          VAR MaxWeekNumber =
+              CALCULATE ( MAX ( 'DimDate'[TotalNumberofWeeks] ), FILTER(ALL ( 'DimDate' ),DimDate[YearNumber]= CurrentYear-1 ))
+          VAR DateRange =
+              FILTER (
+                  ALL ( 'DimDate' ),
+                  IF (
+                      CurrentWeek = 1,
+                          'DimDate'[WeekofYearNumber] = MaxWeekNumber
+                          && 'DimDate'[YearNumber] = CurrentYear - 1,
+                      'DimDate'[WeekofYearNumber] = CurrentWeek - 1
+                      && 'DimDate'[YearNumber] = CurrentYear
+                  )
+              )
+          RETURN
+              CALCULATE ( 'Fact'[Quantity],DateRange)
+
+### Two Weeks Prior WTD
+
+- this factors in switching over on the new year since weeks are trickiest
+
+          TwoWeeksPriorWTD=
+          VAR CurrentWeek =
+              SELECTEDVALUE ( 'DimDate'[WeekofYearNumber] )
+          VAR CurrentYear =
+              SELECTEDVALUE ( 'DimDate'[YearNumber] )
+          VAR MaxWeekNumber =
+              CALCULATE ( MAX ( 'DimDate'[TotalNumberofWeeks] ), FILTER(ALL ( 'DimDate' ),DimDate[YearNumber]= CurrentYear-1 ))
+
+          VAR DateRange =
+              FILTER (
+                  ALL ( 'DimDate' ),
+                 SWITCH(TRUE,
+                      CurrentWeek = 1,
+                      'DimDate'[WeekofYearNumber] = MaxWeekNumber - 1
+                          && 'DimDate'[YearNumber] = CurrentYear - 1,
+                      CurrentWeek = 2,
+                         'DimDate'[WeekofYearNumber] = MaxWeekNumber
+                              && 'DimDate'[YearNumber] = CurrentYear - 1,
+                          'DimDate'[WeekofYearNumber] = CurrentWeek - 2
+                              && 'DimDate'[YearNumber] = CurrentYear
+                      )
+                  )
+          RETURN
+          CALCULATE ( 'Fact'[Quantity],DateRange)
+
+### Three Weeks Prior WTD
+
+- this factors in switching over on the new year since weeks are trickiest
+
+          ThreeWeeksPriorWTD =
+          VAR CurrentWeek =
+              SELECTEDVALUE ( 'DimDate'[WeekofYearNumber] )
+          VAR CurrentYear =
+              SELECTEDVALUE ( 'DimDate'[YearNumber] )
+          VAR MaxWeekNumber =
+              CALCULATE ( MAX ( 'DimDate'[TotalNumberofWeeks] ), FILTER(ALL ( 'DimDate' ),DimDate[YearNumber]= CurrentYear-1 ))
+
+          VAR DateRange =
+              FILTER (
+                  ALL ( 'DimDate' ),
+                  SWITCH(TRUE,
+                      CurrentWeek = 1,
+                          'DimDate'[WeekofYearNumber] = MaxWeekNumber - 2
+                           && 'DimDate'[YearNumber] = CurrentYear - 1,
+                      CurrentWeek = 2,
+                          'DimDate'[WeekofYearNumber] = MaxWeekNumber - 1
+                              && 'DimDate'[YearNumber] = CurrentYear - 1,
+                      CurrentWeek = 3,
+                          'DimDate'[WeekofYearNumber] = MaxWeekNumber
+                          && 'DimDate'[YearNumber] = CurrentYear - 1,
+                          'DimDate'[WeekofYearNumber] = CurrentWeek - 3
+                          && 'DimDate'[YearNumber] = CurrentYear
+                          )
+                      )
+          RETURN
+          CALCULATE ( 'Fact'[Quantity],DateRange)
+
+
+### Four Weeks Prior WTD
+
+- this factors in switching over on the new year since weeks are trickiest
+
+          FourWeeksPriorWTD =
+          VAR CurrentWeek =
+              SELECTEDVALUE ( 'DimDate'[WeekofYearNumber] )
+          VAR CurrentYear =
+              SELECTEDVALUE ( 'DimDate'[YearNumber] )
+          VAR MaxWeekNumber =
+              CALCULATE ( MAX ( 'DimDate'[TotalNumberofWeeks] ), FILTER(ALL ( 'DimDate' ),DimDate[YearNumber]= CurrentYear-1 ))
+
+          VAR DateRange =
+              FILTER (
+                  ALL ( 'DimDate' ),
+                  SWITCH(TRUE,
+                          CurrentWeek = 1,
+                              'DimDateTransaction'[WeekofYearNumber] = MaxWeekNumber - 3
+                              && 'DimDate'[YearNumber] = CurrentYear - 1,
+                          CurrentWeek = 2,
+                              'DimDate'[WeekofYearNumber] = MaxWeekNumber - 2
+                              && 'DimDate'[YearNumber] = CurrentYear - 1,
+                          CurrentWeek = 3,
+                              'DimDate'[WeekofYearNumber] = MaxWeekNumber - 1
+                                  && 'DimDate'[YearNumber] = CurrentYear - 1,
+                          CurrentWeek = 4,
+                                  'DimDate'[WeekofYearNumber] = MaxWeekNumber
+                                      && 'DimDate'[YearNumber] = CurrentYear - 1,
+                                  'DimDate'[WeekofYearNumber] = CurrentWeek - 4
+                                      && 'DimDate'[YearNumber] = CurrentYear
+                              )
+                  )
+          RETURN
+          CALCULATE ( 'Fact'[Quantity],DateRange)
